@@ -57,7 +57,7 @@ def preprints():
     go_up()
     move_to(150, 150)
     go_down()
-    file.write('M0 S30')
+    file.write('M0 S30;')
     go_up()
     go_up()
 
