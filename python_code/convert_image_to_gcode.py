@@ -4,10 +4,10 @@ import numpy as np
 #everything in mm
 STYLOS_X_OFFSET = 20
 STYLOS_Y_OFFSET = 50
-DRAW_X_OFFSET = 0
-DRAW_Y_OFSSET = 0
+DRAW_X_OFFSET = 70
+DRAW_Y_OFSSET = 70
 PRINTER_DIM = 250
-BACKUP_HEIGHT = 5
+BACKUP_HEIGHT = 3
 STYLUS_REL_NOZZLE_HEIGHT = 2
 SPEED = 3600
 MAX_DIM = PRINTER_DIM - STYLOS_Y_OFFSET
@@ -67,8 +67,8 @@ def line_by_line():
     preprints()
 
     previous_black = False
-    for y in range(img.shape[1] - 1):
-        for x in range(img.shape[0] - 1):
+    for y in range(img.shape[1]):
+        for x in range(img.shape[0]):
             if img[x, y] == 0:
                 if not previous_black:
                     previous_black = True
@@ -79,6 +79,9 @@ def line_by_line():
                     previous_black = False
                     move_to(x,y)
                     go_up()
+            if x == (img.shape[0] - 1):
+                previous_black = False
+                go_up()
 
 
 
@@ -129,8 +132,8 @@ def draw_layout(drawing):
     show_img(image)
 
 
-img = cv2.imread('spongebob.png', 0)
-thresh = 127
+img = cv2.imread('pf.jpg', 0)
+thresh = 50
 img = cv2.threshold(img, thresh, 255, cv2.THRESH_BINARY)[1]
 draw_layout(img)
 img = scale_img(img, desired_img_width)
